@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Producción</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-datetime style="margin-bottom: 60px;" disabled [value]="prodDayService.selectedProdDay.date"></ion-datetime>  
+
+  <div *ngFor="let type of types.typeJuice">
+    <ion-list class="typeJuice" *ngIf="type === prodDayService.printJuiceType || !prodDayService.printJuiceType">
+      <ion-card *ngFor="let jugo of produccionCode.juicesPerTypeActive(type)" color="light">
+        <ion-card-header [style.backgroundColor]="jugo.color">
+          <div class="juiceName">
+            <ion-card-subtitle>{{ jugo.name }}</ion-card-subtitle>
+            <ion-card-subtitle class="subtitle">{{ produccionCode.volumePerJuice(jugo.name) | number }} L</ion-card-subtitle>  
+          </div>
+  
+          <hr>
+  
+          <div *ngFor="let caliber of produccionCode.calibersByJuiceActive(jugo.name)" class="calibers">
+            <div style="font-size: large; font-weight: bold;">{{ caliber }}ml:</div>
+            <div style="font-size: large; font-weight: bold;">{{ produccionCode.amountPerCaliberAndJuice(caliber, jugo.name) }}</div>
+          </div>
+        </ion-card-header>      
+    
+        <ion-list *ngFor="let ingredient of jugo.ingredients">
+          <ion-item>
+            <div style="font-size: large; font-weight: bold;">{{ ingredient.name }}</div>
+            <div style="font-size: large; font-weight: bold;" slot="end">{{ ingredient.grsL * produccionCode.volumePerJuice(jugo.name) | number }} grs</div>
+          </ion-item>
+        </ion-list>
+      </ion-card>  
+    </ion-list>
+  </div>
+
+  <br>
+  <app-comanda></app-comanda>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button *ngIf="!prodDayService.printJuiceType" color="none">
+      <ion-icon name="print"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button *ngFor="let type of produccionCode.typeJuicesPerProdDay()" (click)="selectType(type)">
+        <span style="font-weight: bold;">{{ getCapital(type) }}</span>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab *ngIf="prodDayService.printJuiceType" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="prodDayService.printJuiceType = null" color="none">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="done()" color="none">
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+

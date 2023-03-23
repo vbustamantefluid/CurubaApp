@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Jugo Standard</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="jugoStandardForm.getForm()">
+    <ion-card color="light">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating" color="medium">Nombre</ion-label>
+                  <ion-input type="text" formControlName="name"></ion-input>
+                <app-error-message [field]="jugoStandardForm.getForm().get('name')" error="required" message="Ingrese un nombre"></app-error-message>
+              </ion-item>      
+            </ion-col>
+
+            <div class="active">
+              <ion-label>Activo</ion-label>
+              <ion-checkbox formControlName="active" color="warning"></ion-checkbox>    
+            </div>
+          </ion-row>
+
+          <ion-row>
+            <ion-item>
+              <ion-label position="floating" color="medium">Código</ion-label>
+              <ion-input type="text" formControlName="code"></ion-input>
+              <app-error-message [field]="jugoStandardForm.getForm().get('code')" error="required" message="Ingrese un código"></app-error-message>
+            </ion-item> 
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating" color="medium">Tipo de jugo</ion-label>
+                <ion-select formControlName="type" interface="popover">
+                  <ion-select-option *ngFor="let typeJuice of types.typeJuice" [value]="typeJuice">{{ typeJuice }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <app-error-message [field]="jugoStandardForm.getForm().get('type')" error="required" message="Ingrese tipo de local"></app-error-message>      
+            </ion-col>
+
+            <div class="active">
+              <ion-label>Color</ion-label>
+              <input type="color" formControlName="color">
+            </div>
+
+          </ion-row>
+        </ion-grid>
+    
+        <div *ngFor="let ingredient of standardService.selectedStandard.ingredients">
+          <ion-item (click)="this.standardService.selectedIngred = ingredient">
+            <ion-label>{{ ingredient.name }}:</ion-label>
+            <ion-label>{{ ingredient.grsL }} grs/L</ion-label>
+            <ion-icon (click)="deleteIngredient(ingredient)" style="color: rosybrown" slot="end" name="remove-circle"></ion-icon>
+          </ion-item>  
+        </div>
+
+        <app-ingredient></app-ingredient>
+    
+        <ion-button (click)="sendStandard()" color="success" size="full">Enviar</ion-button>  
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

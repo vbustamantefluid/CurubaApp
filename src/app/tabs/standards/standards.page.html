@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Standards</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="goTo('mercado')">
+      <ion-icon name="nutrition" color="warning" slot="start"></ion-icon>
+      Productos de mercado
+    </ion-item>
+
+    <ion-item (click)="goTo('jugos-standard')">
+      <ion-icon name="flask" color="warning" slot="start"></ion-icon>
+      Jugos standard
+    </ion-item>
+
+    <ion-item (click)="goTo('precios')">
+      <ion-icon name="cash" color="warning" slot="start"></ion-icon>
+      Precios
+    </ion-item>
+
+    <ion-item (click)="goTo('costos')">
+      <ion-icon name="newspaper" color="warning" slot="start"></ion-icon>
+      Estructura de costos
+    </ion-item>
+  </ion-list>
+</ion-content>

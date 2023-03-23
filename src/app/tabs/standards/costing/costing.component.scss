@@ -1,0 +1,72 @@
+.list{
+    padding: 0px;
+    margin: auto;
+    max-height: 35px;
+    display: flex;
+    align-items: center;
+}
+
+ion-card{
+    width: 300px;
+    margin: 3px auto;
+}
+
+ion-card-content{
+    padding: 5px;
+}
+
+ion-card-subtitle{
+    font-weight: bold;
+    text-align: center;
+    font-size: medium;
+    margin: 10px auto;
+}
+
+.item{
+    min-width: 140px;
+    margin: 0px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.porcentage{
+    margin: 0;
+    margin-right: -10px;
+    padding: 0;
+}
+
+input{
+    margin: 3px;
+}
+
+ion-item{
+    max-height: 35px;
+}
+
+.itemChange{
+    border: 1px solid lightblue;
+    border-radius: 3px;
+    margin: 3px;
+    padding: 0px;
+    margin-right: -20px;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-style: italic;
+}
+
+.get{
+    margin: 0px;
+    padding: 0px;
+}
+
+span{
+    font-size: small; 
+    font-style: italic;
+    text-align: right;
+    padding-right: 10px;
+}

@@ -1,0 +1,99 @@
+ion-content{
+    font-family: "Times New Roman", Times, serif;
+}
+
+.logoCuruba{
+    height: 14mm;
+}
+
+.cabecera{
+    min-width: 65mm;
+    margin: 3mm 0;
+    border-top: 3px double lightblue;
+    border-bottom: 3px double lightblue;
+    padding: 0;
+}
+
+.flexCenter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    border: 1px solid lightblue; 
+    margin: 1mm; 
+    padding: 0;
+    border-radius: 1mm;
+}
+
+.small{
+    font-size: small;
+    text-align: left;
+}
+
+.remito{
+    max-width: 25mm; 
+    min-width: 25mm; 
+    margin: 2mm 1mm 3mm 2mm; 
+    font-size: small;
+    background-color: lightblue;
+}
+
+.firma{
+    border-bottom: dashed 1px gray;
+    margin: 3mm;
+}
+
+input {
+    max-width: 12mm;
+    padding: 0 1mm;
+    border:0;
+    outline:0;
+    background-color: lightgray;
+}
+
+ion-datetime{
+    margin: 0;
+    padding: 0;
+}
+
+input:focus {
+    outline:none !important;
+}
+
+.colOne{
+    min-width: 25mm;
+    text-align: center;
+}
+
+.colTwo{
+    min-width: 12mm;
+    text-align: center;
+}
+
+.colThree{
+    min-width: 12mm;
+    text-align: center;
+}
+
+.colFour{
+    min-width: 12mm;
+    text-align: center;
+}
+
+.colFive{
+    min-width: 12mm;
+    text-align: right;
+}
+
+.colSix{
+    min-width: 15mm;
+    text-align: right;
+}
+
+.total{
+    border-top: dashed 1px gray;
+    font-weight: bold;
+}

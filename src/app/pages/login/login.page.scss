@@ -1,0 +1,13 @@
+ion-button[color="dark"]{
+    text-transform: initial;
+}
+
+ion-content{
+    --background: var(--ion-color-warning);
+}
+
+ion-card-header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

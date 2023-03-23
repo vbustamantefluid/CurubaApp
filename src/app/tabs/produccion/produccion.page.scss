@@ -1,0 +1,26 @@
+.caliber{
+    color: gray;
+    margin-right: 8px;
+}
+
+ion-list{
+    padding: 0px;
+    box-shadow: 0px 1px 2px 1px rgb(0,0,0,0.3);
+    max-width: 400px;
+    margin: auto;
+}
+
+ion-card {
+    max-width: 400px;
+    margin: auto;
+}
+
+ion-card-subtitle{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+ion-label{
+    margin-left: 10px;
+}

@@ -1,0 +1,12 @@
+ion-content{
+    --background: var(--ion-color-warning);
+}
+
+ion-button{
+    margin: 10px;
+}
+
+ion-card, ion-button{
+    max-width: 400px;
+    margin: 5px auto;
+}

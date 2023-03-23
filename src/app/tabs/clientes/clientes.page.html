@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Clientes</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>    
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-list *ngFor="let client of clientService.clients">
+      <ion-item [style.opacity]="client.active ? '1' : '0.5'" 
+      (click)="editClient(client)">
+        <ion-label>{{ client.name }}</ion-label>
+      </ion-item>  
+    </ion-list>
+  </div>
+  
+  <ng-template #loadData><app-load-data></app-load-data></ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new()" color="none">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

@@ -1,0 +1,81 @@
+<ion-row style="height: 2cm;">
+  <ion-col style="max-width: 2cm">
+    <ion-img class="logoCuruba" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-col>
+  <ion-col class="cabecera flexCenter">
+    <ion-row style="font-weight: bold;">CURUBA CORDOBA SAS</ion-row>
+    <ion-row>33-71595105-9</ion-row>
+    <ion-row>3472-436927</ion-row>
+  </ion-col>
+  <ion-col class="flexCenter box remito">
+    <ion-row>Remito</ion-row>
+    <ion-row>Nº<input type="text" [(ngModel)]="prodDayService.selectedProdDay.remito"></ion-row>
+    <ion-row>
+      <ion-datetime display-format="DD/MM" [(ngModel)]="prodDayService.selectedProdDay.date"></ion-datetime>
+    </ion-row>
+  </ion-col>
+</ion-row>
+<ion-row style="height: 22mm" class="box">
+  <ion-col style="max-width: 4cm;">
+    <ion-row style="height: 6mm;"></ion-row>
+    <ion-row class="small">Domicilio:</ion-row>
+    <ion-row class="small">DNI / CUIL:</ion-row>
+    <ion-row class="small">Teléfono:</ion-row>
+  </ion-col>
+  <ion-col class="flexCenter" style="min-width: 7cm;">
+    <ion-row style="font-weight: bold">{{ clientService.selectedClient.name }}</ion-row>
+    <ion-row class="small">{{ clientService.selectedClient.contactInfo.address || '-' }}</ion-row>
+    <ion-row class="small">{{ clientService.selectedClient.contactInfo.cuit || '-' }}</ion-row>
+    <ion-row class="small">{{ clientService.selectedClient.contactInfo.phone || '-' }}</ion-row>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col class="box" style="margin: 0 4mm; height: 10cm; font-size: small;">
+    <ion-row style="font-weight: bold; background-color: lightgray;">
+      <ion-col class="colOne">Tipo</ion-col>
+      <ion-col class="colTwo">Calib.</ion-col>
+      <ion-col class="colThree">Código</ion-col>
+      <ion-col class="colFour">Cant.</ion-col>
+      <ion-col class="colFive">$unit</ion-col>
+      <ion-col class="colSix">Subt.</ion-col>
+    </ion-row>
+    <div *ngFor="let caliber of getCalibers()">
+      <ion-row *ngFor="let ordered of getOrders(caliber)">
+        <ion-col class="colOne">{{ ordered.typeJuice }}</ion-col>
+        <ion-col class="colTwo">{{ caliber.caliber }}</ion-col>
+        <ion-col class="colThree">{{ getCode(ordered.juice) }}</ion-col>
+        <ion-col class="colFour">{{ ordered.amount }}</ion-col>
+        <ion-col class="colFive">${{ getPrice(caliber, ordered) }}</ion-col>
+        <ion-col class="colSix">${{ getSubt(caliber, ordered) | number:'1.0-0'}}</ion-col>
+      </ion-row>
+    </div>
+    <ion-row>
+      <ion-col class="colOne"></ion-col>
+      <ion-col class="colTwo"></ion-col>
+      <ion-col class="colThree"></ion-col>
+      <ion-col class="colFour total">{{ totalAmount() }}</ion-col>
+      <ion-col class="colFive total"></ion-col>
+      <ion-col class="colSix total" style="background-color: lightblue; border-radius: 3px;">${{ produccionCode.chargePerClient(getClientOrder()) | number:'1.0-0'  }}</ion-col>
+    </ion-row>
+    <ion-row  *ngIf="clientService.selectedClient.iva">
+      <ion-col class="colOne"></ion-col>
+      <ion-col class="colTwo"></ion-col>
+      <ion-col class="colThree"></ion-col>
+      <ion-col class="colFour"></ion-col>
+      <ion-col class="colFive">IVA</ion-col>
+      <ion-col class="colSix">${{ produccionCode.chargePerClient(getClientOrder()) * 0.21 | number:'1.0-0'  }}</ion-col>
+    </ion-row>
+    <ion-row style="font-weight: bold;" *ngIf="clientService.selectedClient.iva">
+      <ion-col class="colOne"></ion-col>
+      <ion-col class="colTwo"></ion-col>
+      <ion-col class="colThree"></ion-col>
+      <ion-col class="colFour"></ion-col>
+      <ion-col class="colFive">Total:</ion-col>
+      <ion-col class="colSix" style="background-color: lightblue; border-radius: 3px;">${{ produccionCode.chargePerClient(getClientOrder()) * 1.21 | number:'1.0-0'  }}</ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>
+<ion-row class="box" style="height: 2cm;">
+  <ion-col>Recibí conforme:</ion-col>
+  <ion-col class="firma"></ion-col>
+</ion-row>

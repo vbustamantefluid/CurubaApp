@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Precios</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content>
+  <form #f="ngForm" *ngIf="pricingService.prices[0]; else loadData" (ngSubmit)="changeCaliber(f)">
+    <ion-segment scrollable color="secondary" [value]="types.calibers[0]">
+      <ion-list *ngFor="let caliber of types.calibers">
+        <ion-segment-button [value]="caliber" (click)="changeCaliber(f); selectedCaliber = caliber">
+          <div>{{ caliber }}ml</div>
+        </ion-segment-button>
+      </ion-list>
+    </ion-segment>
+      
+    <ion-list class="list" *ngFor="let caliber of types.calibers">
+      <ion-grid *ngIf="selectedCaliber === caliber">
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="savePrices()" type="submit" color="light">Guardar</ion-button>
+          </ion-col>
+          <ion-col class="colHeader" style="margin-top: 25px;" *ngFor="let client of types.typeClient">
+            <div>{{ client }}</div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let juice of types.typeJuice">
+          <ion-col>
+            <div>{{ juice }}</div>
+          </ion-col>
+          <ion-col class="colHeader" *ngFor="let client of types.typeClient">
+            <div class="input">
+              <div class="signo">$</div>
+              <ion-input type="number" [name]="getName(juice, client, caliber)" [value]="getPrice(caliber, juice, client)" [ngModel]="getPrice(caliber, juice, client)"></ion-input>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>  
+    </ion-list>
+      
+    <ion-list class="list" *ngIf="showArchives">
+      <ion-item *ngFor="let price of pricingService.prices">
+        <ion-label color="secondary" (click)="pricingService.selectedPrice = price">{{ price.id | date }}</ion-label>
+        <ion-label color="secondary" *ngIf="price === pricingService.selectedPrice">(actual)</ion-label>
+        <ion-icon slot="end" (click)="deletePrice(price.id)" style="color: rosybrown" name="remove-circle"></ion-icon>
+      </ion-item>
+    </ion-list>
+
+    <ion-button (click)="showArchives = !showArchives" color="light" size="full">Archivo</ion-button>  
+  </form>
+
+  <ng-template #loadData><app-load-data></app-load-data></ng-template>
+
+</ion-content>
+

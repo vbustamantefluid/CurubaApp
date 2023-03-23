@@ -1,0 +1,47 @@
+.colZero, .firstCol, .secondCol, .thirdCol, .lastCol{
+    min-height: 35px;
+    max-height: 35px;
+    display: flex;
+    align-items: center;
+    margin: 0px;
+}
+
+.colZero{
+    max-width: 25px;
+}
+
+.firstCol{
+    min-width: 90px;
+    white-space: nowrap; 
+    overflow: hidden;
+}
+
+.secondCol{
+    width: 60px;
+    justify-content: flex-start;
+    white-space: nowrap; 
+    overflow: hidden;
+}
+
+.thirdCol {
+    min-width: 75px;
+    justify-content: center;
+}
+
+.input{
+    border: 1px solid lightblue; 
+    border-radius: 3px;
+    max-height: 30px;
+    padding: 1px;
+}
+
+.lastCol{
+    width: 60px;
+    justify-content: flex-start;
+    white-space: nowrap; 
+    overflow: hidden;
+}
+
+input[type="checkbox"] {
+    color: green;
+}

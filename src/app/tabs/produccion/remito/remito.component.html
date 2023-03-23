@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{ clientService.selectedClient.name }}</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="overflow-x: auto;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <app-remito-data></app-remito-data>
+        </ion-col>
+        <ion-col style="border-left: 1px dashed gray;">
+          <app-remito-data></app-remito-data>
+        </ion-col>  
+      </ion-row>
+    </ion-grid>    
+  </div>
+</ion-content>

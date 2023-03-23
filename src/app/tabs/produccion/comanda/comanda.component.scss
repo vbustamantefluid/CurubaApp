@@ -1,0 +1,65 @@
+ion-grid{
+    overflow-x: auto;
+    border: 1px solid lightgray;
+}
+
+ion-datetime{
+    padding: 0px;
+    margin: 0px auto;
+}
+
+ion-row, ion-col, div{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.firstCol{
+    min-width: 160px;
+    max-width: 160px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.secondCol{
+    min-width: 60px;
+    max-width: 60px;
+    font-weight: bold;
+}
+
+.thirdCol{
+    min-width: 60px;
+    max-width: 60px;
+    color: blue;
+    justify-content: center;
+}
+
+.forthCol{
+    font-weight: bold;
+    min-width: 40px;
+    max-width: 40px;
+    justify-content: flex-end;
+}
+
+.col, .lastCol{
+    width: 40px;
+    justify-content: center;
+    border: 1px solid lightblue;
+    border-radius: 3px;
+}
+
+.lastCol{
+    font-weight: bold;
+    border-top: 2px solid black;
+    color: blue;
+}
+
+.firstRow{
+    font-size: small;
+}
+
+@media print{
+    ion-header, ion-fab {
+        display: none;
+    }
+}

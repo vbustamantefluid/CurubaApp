@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Mercado</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="background-color: lightblue;">
+      <ion-col class="colZero"></ion-col>
+      <ion-col class="firstCol"></ion-col>
+      <ion-col class="secondCol" style="font-weight: bold;">Suma</ion-col>
+      <ion-col class="thirdCol" style="font-weight: bold;">Hay</ion-col>
+      <ion-col class="lastCol" style="font-weight: bold;">Falta</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let ingredient of getIngredients()"
+     [style.opacity]="ingredient.inactive ? '0.3' : '1'">
+      <ion-col class="colZero">
+        <input class="colZero" type="checkbox" [(ngModel)]="ingredient.inactive">
+      </ion-col>
+      <ion-col class="firstCol">{{ ingredient.name }}</ion-col>
+      <ion-col class="secondCol">
+        <div style="margin-right: 2px;">{{ getKgs(ingredient) | number:'1.0-2' }} Kg</div>
+      </ion-col>
+      <ion-col class="thirdCol" >
+        <ion-input class="input" type="number" [name]="ingredient.name" [(ngModel)]="ingredient.hay"></ion-input>Kg
+      </ion-col>
+      <ion-col class="lastCol">{{ getResult(ingredient) | number:'1.0-2' }}Kg</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

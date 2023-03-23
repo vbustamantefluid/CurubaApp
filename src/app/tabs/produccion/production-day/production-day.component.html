@@ -1,0 +1,128 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-back-button *ngIf="!clientService.selectedClient.name" slot="start"></ion-back-button>
+    <ion-title>Pedidos</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-datetime class="dateTime" 
+    *ngIf="!clientService.selectedClient.name"
+    [value]="prodDayService.selectedProdDay.date"></ion-datetime>
+
+  <ion-card *ngIf="openClients">
+    <ion-card-header>Clientes Activos</ion-card-header>
+    <ion-card-content>
+      <form #f="ngForm" (ngSubmit)="sendNewClient(f)">
+        <ion-list *ngFor="let client of getClients()">
+          <ion-item>
+            <ion-checkbox (ngModel)="false" [name]="client.name" color="warning"></ion-checkbox>
+            <ion-label style="margin-left: 5px;">{{ client.name }}</ion-label>
+          </ion-item>
+        </ion-list>   
+        <ion-button type="submit" color="success" size="full">Cerrar</ion-button>  
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="openJuices">
+    <ion-card-header>Jugos Activos</ion-card-header>
+    <ion-card-content>
+      <ion-segment scrollable color="secondary" [value]="types.typeJuice[0]">
+        <ion-list *ngFor="let type of types.typeJuice">
+          <ion-segment-button [value]="type" (click)="selectedTypeJuice = type">
+            <div style="font-weight: bold;">{{ type }}</div>
+          </ion-segment-button>
+        </ion-list>
+      </ion-segment>
+      <ion-list *ngFor="let standard of getTypeJuices()">
+        <ion-item [style.color]="standard.color" 
+        [color]="standard.active ? '' : 'medium'"
+        (click)="toggleActive(standard)">
+          <ion-label style="font-weight: bold;">{{ standard.name }}</ion-label>
+        </ion-item>
+      </ion-list> 
+      <ion-button (click)="openJuices = false" color="success" size="full">Cerrar</ion-button>  
+  </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngFor="let clientOrder of prodDayService.selectedProdDay.clientOrders">
+    <ion-item *ngIf="(!clientService.selectedClient.name || clientService.selectedClient.name === clientOrder.client) && !openClients && !openJuices">
+      <ion-icon (click)="selectClient(clientOrder.client)" style="margin: 0px 5px 5px -5px" slot="start" name="return-up-back" *ngIf="clientService.selectedClient.name === clientOrder.client"></ion-icon>
+      <ion-icon *ngIf="produccionCode.calibersByClientActive(clientOrder).length === 0 && !clientService.selectedClient.name" style="margin: 0 10px 0 -5px; color: rosybrown;" slot="start" (click)="deleteClientOrder(clientOrder.client)" name="remove-circle"></ion-icon>
+      <ion-icon *ngIf="produccionCode.calibersByClientActive(clientOrder).length > 0 && !clientService.selectedClient.name" style="margin: 0 10px 0 -5px;" slot="start" (click)="gotoRemito(clientOrder.client)" name="document-text" color="warning"></ion-icon>
+      <div (click)="selectClient(clientOrder.client)">{{ clientOrder.client }}</div>
+      <div class="price" slot="end" *ngIf="produccionCode.chargePerClient(clientOrder) > 0">${{ produccionCode.chargePerClient(clientOrder)  | number:'1.0-0' }}</div>
+
+      <div style="margin: 0px" slot="end">
+        <div *ngFor="let caliber of produccionCode.calibersByClientActive(clientOrder)" class="active">
+          <div style="color: blue;">{{ caliber }}ml</div>
+          <div style="font-weight: bold;">{{ produccionCode.amountPerClientAndCaliber(clientOrder, caliber) }}</div>    
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-card *ngIf="clientService.selectedClient.name === clientOrder.client" color="light">
+      <ion-grid *ngFor="let caliber of clientOrder.calibers">
+        <ion-header class="caliber">{{ caliber.caliber }}ml</ion-header>
+        <ion-row *ngFor="let typeJuice of produccionCode.typeJuicesByClient(clientOrder.client)">
+          <ion-col *ngFor="let ordered of getOrdered(caliber, typeJuice)" class="column">
+            <ion-label position="floating" class="name">{{ getCode(ordered.juice) }}</ion-label>
+            <ion-input type="number" [(ngModel)]="ordered.amount" [name]="ordered.name"></ion-input>  
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="dateDelivery">Entregar: <ion-datetime [(ngModel)]="clientOrder.dateDelivery"></ion-datetime></div>
+      <ion-button (click)="loadOrder()" color="success" size="full">Cargar</ion-button>
+    </ion-card>
+  </ion-list>
+
+  <ion-item class="totalLine" *ngIf="!clientService.selectedClient.name && !openClients && !openJuices">
+    <ion-icon (click)="openClients = true" color="success" style="margin: 0px 5px 5px -5px" slot="start" name="add-circle"></ion-icon>
+    <div slot="end" class="total">Total: ${{ produccionCode.totalCharge() | number }}</div>
+    <ion-icon (click)="openJuices = true" color="warning" style="margin: 0px 5px 5px -5px" slot="end" name="flask"></ion-icon>
+  </ion-item>
+
+  <ion-card color="warning" *ngFor="let caliber of produccionCode.calibersActive()">
+    <ion-grid>
+      <ion-card-header class="caliber">
+        <div>{{ caliber }}ml</div>
+        <div  style="font-size: large;">Totales: {{ produccionCode.amountPerCaliber(caliber) }}</div>
+      </ion-card-header>
+  
+      <ion-row *ngFor="let typeJuice of produccionCode.typeJuicesPerProdDay()">
+        <ion-col *ngFor="let standard of produccionCode.juicesPerTypeAndCaliberActive(typeJuice, caliber)" class="column"
+        [style.opacity]="produccionCode.amountPerCaliberAndJuice(caliber, standard.name) === 0 ? '0.3' : '1'">
+          <ion-label position="floating" class="name">{{ standard.code }}</ion-label>
+          <div>{{ produccionCode.amountPerCaliberAndJuice(caliber, standard.name) }}</div>
+        </ion-col>  
+      </ion-row>
+      
+    </ion-grid>
+  </ion-card>
+
+  <ion-card *ngIf="!clientService.selectedClient.name">
+    <ion-card-header>Operario/s:</ion-card-header>
+    <ion-card-content *ngFor="let name of getUserNames()">
+      <ion-label style="margin-left: 20px;">{{ name }}</ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!clientService.selectedClient.name">
+    <ion-card-header>Reparte/n:</ion-card-header>
+    <ion-card-content *ngFor="let delivery of getUserDelivery()">
+      <ion-label style="margin-left: 20px;">{{ delivery }}</ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab *ngIf="!clientService.selectedClient.name" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button style="margin-bottom: 10px;" (click)="gotoMarket()" color="none">
+      <ion-icon name="nutrition"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-button (click)="gotoProduction()" color="none">
+      <ion-icon name="construct"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

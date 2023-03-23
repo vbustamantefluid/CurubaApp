@@ -1,0 +1,32 @@
+ion-list{
+    padding: 0px;
+}
+
+.colHeader{
+    max-width: 45px;
+    padding: 0px;
+}
+
+ion-row{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.input{
+    border: 1px solid lightblue; 
+    border-radius: 3px;
+    display: flex;
+    font-size: medium;
+    max-height: 35px;
+}
+
+.signo{
+    margin: 6px -8px 0px 2px;
+    font-size: small;
+    color: gray;
+}
+
+.list, ion-button{
+    max-width: 400px;
+    margin: auto;
+}

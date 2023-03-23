@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Costos</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment scrollable color="secondary" [value]="types.calibers[0]">
+    <ion-list class="list" *ngFor="let caliber of types.calibers">
+      <ion-segment-button [value]="caliber" (click)="selectedCaliber = caliber">
+        <div>{{ caliber }}ml</div>
+      </ion-segment-button>
+    </ion-list>
+  </ion-segment>
+  <ion-segment scrollable color="secondary" [value]="types.typeJuice[0]">
+    <ion-list class="list" *ngFor="let typeJuice of types.typeJuice">
+      <ion-segment-button [value]="typeJuice" (click)="selectedTypeJuice = typeJuice">
+        <div>{{ typeJuice }}</div>
+      </ion-segment-button>
+    </ion-list>
+  </ion-segment>
+  <ion-segment scrollable color="secondary" [value]="types.typeClient[0]">
+    <ion-list class="list" *ngFor="let typeClient of types.typeClient">
+      <ion-segment-button [value]="typeClient" (click)="selectedTypeClient = typeClient">
+        <div>{{ typeClient }}</div>
+      </ion-segment-button>
+    </ion-list>
+  </ion-segment>
+
+  <ion-card *ngIf="pricingService.prices[0]; else loadData">
+    <ion-card-content *ngIf="getPrice() > 0; else cartel">
+      <ion-item style="font-weight: bold;" color="light">
+        <ion-label class="item">Precio (+IVA) <ion-toggle color="warning" [(ngModel)]="iva"></ion-toggle></ion-label>
+        <ion-label (click)="newPrice = !newPrice" class="get">${{ getPrice('withIva') }}</ion-label>
+        <div class="porcentage" slot="end">100%</div>
+      </ion-item>
+      <ion-item *ngIf="newPrice" class="itemChange">
+        <form #f="ngForm" (ngSubmit)="changePrice(f)">
+          <ion-label>Nuevo precio: $</ion-label>
+          <ion-input name="price" type="number" [ngModel]="getPrice()"></ion-input>
+          <ion-button color="warning" type="submit"><ion-icon color="light" name="send"></ion-icon></ion-button>
+        </form>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Materia prima</ion-label>
+        <ion-label (click)="material = !material" class="get">${{ getMaterial() }}</ion-label>
+        <div class="porcentage" slot="end">{{ materialPercent() }}%</div>
+      </ion-item>
+      <ion-item (click)="material = false" *ngIf="material" class="itemChange">
+        <span>El valor es un promedio del de cada {{ selectedTypeJuice }} de {{ selectedCaliber }}ml</span>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Mano de obra</ion-label>
+        <ion-label (click)="newManpower = !newManpower" class="get">${{ getManpower() }}</ion-label>
+        <div class="porcentage" slot="end">{{ manpowerPercent() }}%</div>
+      </ion-item>
+      <ion-item *ngIf="newManpower" class="itemChange">
+        <form #f="ngForm" (ngSubmit)="changeManpower(f)">
+          <ion-label>Nuevo costo: $</ion-label>
+          <ion-input name="cost" type="number" [ngModel]="getManpower()"></ion-input>
+          <ion-button color="warning" type="submit"><ion-icon color="light" name="send"></ion-icon></ion-button>
+        </form>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Logística</ion-label>
+        <ion-label style="margin: 0;">${{ getLogistic() }}</ion-label>
+        <div class="porcentage" slot="end">{{ logisticPercent() }}%</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Administración</ion-label>
+        <ion-label style="margin: 0;">${{ getManagement() }}</ion-label>
+        <div class="porcentage" slot="end">{{ managementPercent() }}%</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Marketing</ion-label>
+        <ion-label style="margin: 0;">${{ getMarketing() }}</ion-label>
+        <div class="porcentage" slot="end">{{ marketingPercent() }}%</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Franquicia</ion-label>
+        <ion-label style="margin: 0;">${{ getFranchise() }}</ion-label>
+        <div class="porcentage" slot="end">{{ franchisePercent() }}%</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="item">Packaging</ion-label>
+        <ion-label style="margin: 0;">${{ getPackaging() }}</ion-label>
+        <div class="porcentage" slot="end">{{ packagingPercent() }}%</div>
+      </ion-item>
+
+      <ion-item style="font-weight: bold;" color="light">
+        <ion-label class="item">Rentabilidad</ion-label>
+        <ion-label style="margin: 0;">${{ getRentability() }}</ion-label>
+        <div class="porcentage" slot="end">{{ rentabilityPercent() }}%</div>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ng-template #loadData><app-load-data></app-load-data></ng-template>
+
+  <ng-template #cartel>
+    <ion-card color="warning">
+      <ion-card-content>
+        <ion-card-subtitle>No hay datos para esta selección</ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+</ion-content>

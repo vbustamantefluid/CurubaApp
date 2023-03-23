@@ -1,0 +1,57 @@
+ion-card-subtitle{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+}
+
+ion-list{
+    padding: 0px;
+}
+
+.typeJuice{
+  display: flex; 
+  flex-wrap: wrap;
+}
+
+ion-card{
+  width: 220px;
+  margin: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+ion-card-header{
+  padding: 10px 10px 0 10px;
+}
+
+ion-item{
+  max-height: 40px;
+}
+
+.juiceName{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 10px; 
+  color: white
+}
+
+.subtitle{
+  text-align: right; 
+  min-width: 40px; 
+  margin: 0;
+}
+
+.calibers{
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  color: beige;
+}
+
+@media print {
+  ion-header, ion-fab{
+    display: none;
+  }
+}

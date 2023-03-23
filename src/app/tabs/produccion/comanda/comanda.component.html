@@ -1,0 +1,50 @@
+<div *ngFor="let date of getDateDeliverys()">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="firstCol">
+        <ion-datetime disabled [value]="date"></ion-datetime>  
+      </ion-col>
+      <ion-col class="secondCol firstRow">Importe</ion-col>
+      <ion-col class="thirdCol firstRow">Calibre</ion-col>
+      <ion-col class="forthCol firstRow">Total</ion-col>
+      <div *ngFor="let typeJuice of produccionCode.typeJuicesPerProdDay()">
+        <ion-col *ngFor="let juice of produccionCode.juicesPerTypeActive(typeJuice)"
+        [style.color]="juice.color" style="font-weight: bold;">{{ juice.code }}</ion-col>
+      </div>
+    </ion-row>
+    <div style="flex-direction: column;" *ngFor="let clientOrder of produccionCode.clientOrderIfDateDelivery(date)">
+      <ion-row *ngFor="let caliber of produccionCode.calibersByClientActive(clientOrder)">
+        <ion-col class="firstCol" (click)="gotoRemito(clientOrder.client)"><span *ngIf="caliber === produccionCode.calibersByClientActive(clientOrder)[0]">{{ clientOrder.client }}</span></ion-col>
+        <ion-col class="secondCol"><span *ngIf="caliber === produccionCode.calibersByClientActive(clientOrder)[0]">${{ produccionCode.chargePerClient(clientOrder) | number }}</span></ion-col>
+        <ion-col class="thirdCol">{{ caliber }}ml</ion-col>
+        <ion-col class="forthCol">{{ produccionCode.amountPerClientAndCaliber(clientOrder, caliber) }}</ion-col>
+        <div *ngFor="let typeJuice of produccionCode.typeJuicesPerProdDay()">
+          <ion-col class="col"
+            [style.fontWeight]="this.produccionCode.withSeals(clientOrder.client) ? 'bold' : ''" 
+            *ngFor="let juice of produccionCode.juicesPerTypeActive(typeJuice)">
+            {{ produccionCode.amountPerClientPerCaliberAndJuice(clientOrder, caliber, juice.name) }}</ion-col>
+        </div>  
+      </ion-row>
+    </div>
+    <ion-row>
+      <ion-col class="firstCol" style="justify-content: flex-end; border-top: 2px solid black;">Total:</ion-col>
+      <ion-col class="secondCol" style="border-top: 2px solid black;">${{ produccionCode.totalCharge() | number }}</ion-col>
+      <ion-col class="thirdCol"></ion-col>
+      <ion-col class="forthCol" style="text-align: right; color: blue; font-size: small;">Precintos:</ion-col>
+      <div *ngFor="let typeJuice of produccionCode.typeJuicesPerProdDay()">
+        <ion-col class="lastCol"*ngFor="let juice of produccionCode.juicesPerTypeActive(typeJuice)">
+          {{ produccionCode.sealsPerJuice(juice.name) }}</ion-col>
+      </div>
+    </ion-row>
+    <ion-row>
+      <ion-col class="firstCol"></ion-col>
+      <ion-col class="secondCol firstRow"></ion-col>
+      <ion-col class="thirdCol firstRow"></ion-col>
+      <ion-col class="forthCol firstRow"></ion-col>
+      <div *ngFor="let typeJuice of produccionCode.typeJuicesPerProdDay()">
+        <ion-col *ngFor="let juice of produccionCode.juicesPerTypeActive(typeJuice)"
+        [style.color]="juice.color" style="font-weight: bold;">{{ juice.code }}</ion-col>
+      </div>
+    </ion-row>
+  </ion-grid>
+</div>

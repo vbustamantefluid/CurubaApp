@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title *ngIf="!clientService.selectedClient.id">Nuevo Cliente</ion-title>
+    <ion-title *ngIf="clientService.selectedClient.id">{{ clientService.selectedClient.name }}</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="newClientForm.getForm()">
+    <ion-card color="light">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="flex-center" style="flex-direction: column;">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nombre</ion-label>
+                <ion-input type="text" formControlName="name"></ion-input>
+              </ion-item>
+              <app-error-message [field]="newClientForm.getForm().get('name')" error="required" message="Ingrese un nombre"></app-error-message>  
+            </ion-col>
+
+            <div class="active">
+              <ion-label>Activo</ion-label>
+              <ion-checkbox formControlName="active" color="warning"></ion-checkbox>
+            </div>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating" color="medium">Tipo de cliente</ion-label>
+                <ion-select formControlName="type" interface="popover">
+                  <div *ngFor="let client of types.typeClient">
+                    <ion-select-option [value]="client">{{ client }}</ion-select-option>
+                  </div>
+                </ion-select>  
+              </ion-item>
+              <app-error-message [field]="newClientForm.getForm().get('type')" error="required" message="Ingrese tipo de local"></app-error-message>    
+            </ion-col>
+              
+            <div class="active">
+              <ion-label>IVA</ion-label>
+              <ion-checkbox formControlName="iva" color="warning"></ion-checkbox>
+            </div>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating" color="medium">Calibres</ion-label>
+                <ion-select multiple="true" formControlName="caliber">
+                  <div *ngFor="let caliber of types.calibers">
+                    <ion-select-option type="number" [value]='caliber'>{{ caliber }}ml</ion-select-option>
+                  </div>
+                </ion-select>
+              </ion-item>
+              <app-error-message [field]="newClientForm.getForm().get('caliber')" error="required" message="Ingrese al menos un calibre"></app-error-message>      
+            </ion-col>
+
+            <div class="active">
+              <ion-label>Prec.</ion-label>
+              <ion-checkbox formControlName="seals" color="warning"></ion-checkbox>
+            </div>
+          </ion-row>
+        </ion-grid>
+
+        <ion-col>
+          <ion-item style="max-width: 250px;">
+            <ion-label position="floating" color="medium">Tipos de Jugo</ion-label>
+            <ion-select multiple="true" formControlName="typeJuices">
+              <ion-select-option [value]="typeJuice" *ngFor="let typeJuice of types.typeJuice">{{ typeJuice }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <app-error-message [field]="newClientForm.getForm().get('typeJuices')" error="required" message="Ingrese al menos un tipo de jugo"></app-error-message>      
+        </ion-col>
+      </ion-card-content>
+  
+      <ion-card-header>
+        <ion-card-title  color="warning" color="medium">Información de contacto</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content formGroupName="contactInfo">
+
+        <ion-item>
+          <ion-label position="floating" color="medium">Dirección</ion-label>
+          <ion-input type="text" formControlName="address"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" color="medium">Teléfono</ion-label>
+          <ion-input type="tel" formControlName="phone"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" color="medium">Mail</ion-label>
+          <ion-input type="mail" formControlName="mail"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" color="medium">Contacto</ion-label>
+          <ion-input type="text" formControlName="contact"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" color="medium">Zona</ion-label>
+          <ion-input type="text" formControlName="zone"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" color="medium">CUIT</ion-label>
+          <ion-input type="text" formControlName="cuit"></ion-input>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-button (click)="sendClient()" color="success" size="full">Enviar</ion-button>  
+  </form>
+</ion-content>

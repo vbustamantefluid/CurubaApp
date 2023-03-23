@@ -1,0 +1,91 @@
+ion-list{
+    padding: 0px;
+}
+
+ion-grid, ion-item, ion-button, ion-list{
+    max-width:600px;
+    margin: auto;  
+}
+
+ion-card{
+    max-width:600px;
+    margin: 5px auto;    
+}
+
+ion-card-subtitle{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dateTime{
+    font-weight: bold; 
+    text-align: right; 
+    padding-right: 10px; 
+    background-color: lightblue;
+    max-width: 600px;
+    margin: auto;
+}
+
+.column{
+    min-width: 45px;
+    max-width: 45px;
+    height: 45px;
+    text-align: center;
+    border: 1px solid rgba(128,128,128,0.5); 
+    border-radius: 3px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+}
+
+.caliber{
+    font-weight: bold;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 3px;
+    border-radius: 3px;
+}
+
+.name{
+    white-space: nowrap; 
+    max-width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    text-align: center;
+    color: blue;
+    font-size: small;
+    margin-bottom: -15px;
+}
+
+.client{
+    min-width: 170px; 
+    max-width: 170px; 
+    margin: 0px; 
+    font-weight: bold;
+}
+
+.price{
+    margin: 0px;
+    margin-right: 5px; 
+    min-width: 60px;
+}
+
+.totalLine{
+    border-top: 3px solid gray;
+}
+
+.total{
+    font-weight: bold;
+    margin-right: 40px;
+}
+
+.dateDelivery{
+    color: orange;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 10px;
+    height: 25px;
+}

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Jugos standard</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-segment scrollable color="secondary" [value]="types.typeJuice[0]">
+  <ion-list *ngFor="let type of types.typeJuice">
+    <ion-segment-button [value]="type" (click)="selectedTypeJuice = type">
+      <div style="font-weight: bold;">{{ type }}</div>
+    </ion-segment-button>
+  </ion-list>
+</ion-segment>
+
+<ion-content>
+  <div *ngIf="standardService.standards[0]; else loadData">
+    <ion-list *ngFor="let standard of getTypeJuices()">
+      <ion-item [style.color]="standard.color" 
+      [color]="standard.active ? '' : 'medium'"
+      (click)="showIngredients(standard)">
+        <ion-label style="font-weight: bold;">{{ standard.name }}</ion-label>
+        <div style="text-align: right;">
+          <div>${{ getWholeCost(standard) }}</div>
+          <div class="below">{{ getWholeYield(standard) | number:'1.0-2' }} L</div>  
+        </div>
+      </ion-item>
+
+      <ion-card *ngIf="standard.name === standardService.selectedStandard.name">
+        <ion-list *ngFor="let ingredient of standardService.selectedStandard.ingredients">
+          <ion-item style="display: flex; justify-content: space-between;" color="light">
+            <div slot="start" style="min-width: 100px; margin: 0;">{{ ingredient.name }}</div> 
+            <div style="margin: 0">{{ ingredient.grsL }} grs/L</div>
+            <div slot="end" style="margin: 0; text-align: right;">
+              <div>${{ getCost(ingredient) | number:'1.0-1' }}</div>
+              <div class="below">{{ getYield(ingredient) | number:'1.0-0' }} ml</div>  
+            </div>
+          </ion-item>
+        </ion-list>
+
+        <div class="buttons">
+          <ion-button (click)="deleteStandard(standardService.selectedStandard.id)" color="danger" size="full">Borrar</ion-button>
+          <ion-button (click)="editStandard()" color="success" size="full">Editar</ion-button>  
+        </div>
+      </ion-card>
+    </ion-list> 
+  </div>
+
+  <ng-template #loadData>
+    <app-load-data></app-load-data>
+  </ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new()" color="none">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

@@ -1,0 +1,11 @@
+ion-grid{
+    max-width: 24cm; 
+    min-width: 24cm;
+    border: 2px solid black;
+}
+
+@media print {
+    ion-header {
+        display: none;
+    }
+}

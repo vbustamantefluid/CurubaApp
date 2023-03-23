@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Mercado</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-segment scrollable color="secondary" [value]="types.typeIngredient[0]">
+  <ion-list *ngFor="let type of types.typeIngredient">
+    <ion-segment-button [value]="type" (click)="selectedTypeIngredient = type">
+      <div style="font-weight: bold;">{{ type }}s</div>
+    </ion-segment-button>
+  </ion-list>
+</ion-segment>
+
+<ion-content>
+  <ion-list *ngIf="ingredientService.ingredients[0]; else loadData">
+    <ion-item *ngFor="let ingredient of getIngredients(selectedTypeIngredient)" (click)="setIngredient(ingredient)">
+      <div>
+        <div class="name">{{ ingredient.name }}</div>
+        <div class="below">{{ ingredient.yield }} L/Kg</div>  
+      </div>
+      <div>
+        <div>$/kg <span style="font-weight: bold; margin: 0;">
+          {{ getCost(ingredient) | number:'1.0-1' }}</span></div>
+        <div class="below">{{ ingredient.updated | date }}</div>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #loadData><app-load-data></app-load-data></ng-template>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="new()" color="none">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

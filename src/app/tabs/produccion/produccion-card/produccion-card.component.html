@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Día de producción</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="light">
+    <form #f="ngForm" (ngSubmit)="addProdDay(f)">
+      <ion-card-header>
+        <ion-card-subtitle style="color: gray;" (click)="newProdDay = false; date = undefined">Nuevo día de Producción</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-input name="date" [min]="today" [(ngModel)]="date" type="date"></ion-input>
+        </ion-item>
+      </ion-card-content>
+  
+        <div *ngIf="date">
+          <ion-card-header>
+            <ion-card-subtitle>Clientes</ion-card-subtitle>
+          </ion-card-header>
+  
+          <ion-card-content>
+            <ion-list *ngFor="let client of clientService.clients">
+              <ion-item>
+                <ion-checkbox [(ngModel)]="client.active" [name]="client.name" color="warning"></ion-checkbox>
+                <ion-label style="margin-left: 5px;">{{ client.name }}</ion-label>
+              </ion-item>
+            </ion-list>  
+          </ion-card-content>
+  
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-card-header>
+                  <ion-card-subtitle>Producción</ion-card-subtitle>
+                </ion-card-header>
+                  <ion-list *ngFor="let user of userService.users">
+                    <ion-item>
+                      <ion-checkbox (ngModel)="false" [name]="'prod,' + user.id" color="warning"></ion-checkbox>
+                      <ion-label>{{ user.name }}</ion-label>
+                    </ion-item>
+                  </ion-list>
+              </ion-col>
+              <ion-col>
+                <ion-card-header>
+                  <ion-card-subtitle>Reparto</ion-card-subtitle>
+                </ion-card-header>
+                  <ion-list *ngFor="let user of userService.users">
+                    <ion-item>
+                      <ion-checkbox (ngModel)="false" [name]="'rprt,' + user.id" color="warning"></ion-checkbox>
+                      <ion-label>{{ user.name }}</ion-label>
+                    </ion-item>
+                  </ion-list>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+  
+          <ion-button type="submit" color="success" size="full">Crear</ion-button>  
+        </div>
+    </form>
+  </ion-card>
+</ion-content>

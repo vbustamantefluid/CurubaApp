@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Ingrediente</ion-title>
+    <ion-img slot="end" class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating" color="medium">Nombre</ion-label>
+    <ion-input [(ngModel)]="ingredientService.selectedIngredient.name" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" color="medium">Tipo de ingrediente</ion-label>
+    <ion-select [(ngModel)]="ingredientService.selectedIngredient.type" interface="popover">
+      <ion-select-option *ngFor="let typeIngredient of types.typeIngredient" [value]='typeIngredient'>{{ typeIngredient }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" color="medium">Rendimiento (L/Kg)</ion-label>
+    <ion-input [(ngModel)]="ingredientService.selectedIngredient.yield" type="number"></ion-input>
+  </ion-item>      
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" color="medium">Kgs</ion-label>
+          <ion-input [(ngModel)]="ingredientService.selectedIngredient.kgs" type="number"></ion-input>
+        </ion-item>      
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" color="medium">Costo</ion-label>
+          <div class="cost">
+            $ <ion-input [(ngModel)]="ingredientService.selectedIngredient.cost" type="number"></ion-input>
+          </div>
+        </ion-item>      
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="buttons">
+    <ion-button (click)="deleteIngredient()" color="danger" size="full">Borrar</ion-button>
+    <ion-button (click)=addIngredient() color="success" size="full">Enviar</ion-button>    
+  </div>
+</ion-content>

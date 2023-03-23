@@ -1,0 +1,10 @@
+ion-list{
+  padding: 0px;
+  box-shadow: 0px 1px 2px 1px rgb(0,0,0,0.3);
+  max-width: 420px;
+  margin: auto;
+}
+
+ion-item {
+  --min-height: 75px;
+}

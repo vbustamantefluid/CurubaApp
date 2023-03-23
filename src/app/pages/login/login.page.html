@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="flex-center">
+    <form [formGroup]="form">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="warning">Curuba Lab</ion-card-title>
+          <ion-img class="logoImg" src="./../../../assets/CurubaLogo.png"></ion-img>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating" color="medium">mail</ion-label>
+            <ion-input type="mail" formControlName="mail"></ion-input>
+          </ion-item>
+          <app-error-message [field]="form.get('mail')" error="required" message="Debe escribir un mail"></app-error-message>
+          <app-error-message [field]="form.get('mail')" error="mail" message="mail inválido"></app-error-message>
+          
+          <ion-item>
+            <ion-label position="floating" color="medium">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <app-error-message [field]="form.get('password')" error="required" message="Debe escribir una contraseña"></app-error-message>
+
+          <ion-button (click)="login()" color="warning" id="loginButton" [disabled]="!form.valid" size="full">Ingresar</ion-button>
+          <ion-button (click)="register()" color="warning" size="full" fill="clear">Registrarme</ion-button>
+          <ion-button (click)="forgotmailPassword()" id="recoverPasswordButton" color="dark" [disabled]="!form.get('mail').valid" fill="clear" size="full">Olvidé mi contraseña</ion-button>  
+        </ion-card-content>
+      </ion-card>  
+    </form>
+  </div>
+</ion-content>

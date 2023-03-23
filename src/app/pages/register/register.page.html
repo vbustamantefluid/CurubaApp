@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title color="medium">Ingresar datos</ion-title>
+    <ion-img class="logoImg" slot="end" src="./../../../assets/CurubaLogo.png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="registerForm.getForm()">
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title color="warning">Datos personales</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating" color="medium">Nombre</ion-label>
+          <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('name')" error="required" message="Debe ingresar un nombre"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">mail</ion-label>
+          <ion-input type="mail" formControlName="mail"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('mail')" error="required" message="Debe ingresar un mail"></app-error-message>
+        <app-error-message [field]="registerForm.getForm().get('mail')" error="mail" message="El mail no es válido"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Contraseña</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('password')" error="required" message="Debe ingresar una contraseña"></app-error-message>
+        <app-error-message [field]="registerForm.getForm().get('password')" error="minlength" message="La contraseña debe tener al menos 6 caracteres"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Confirmar contraseña</ion-label>
+          <ion-input type="password" formControlName="repeatPass"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('repeatPass')" error="isntMatching" message="Las contraseñas no coinciden"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Teléfono</ion-label>
+          <ion-input type="tel" formControlName="phone"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('phone')" error="required" message="Debe ingresar un teléfono"></app-error-message>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title  color="warning" color="medium">Dirección actual</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content formGroupName="address">
+        <ion-item>
+          <ion-label position="floating" color="medium">Calle</ion-label>
+          <ion-input type="text" formControlName="street" #autocomplete></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('street')" error="required" message="Debe ingresar una calle"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Número</ion-label>
+          <ion-input type="number" formControlName="number"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('number')" error="required" message="Debe ingresar un número"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Código Postal</ion-label>
+          <ion-input type="string" formControlName="zipCode"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('zipCode')" error="required" message="Debe ingresar un Código Postal"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Provincia</ion-label>
+          <ion-input type="text" formControlName="state"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('state')" error="required" message="Debe ingresar una provincia"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Ciudad</ion-label>
+          <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('city')" error="required" message="Debe ingresar una ciudad"></app-error-message>
+        <ion-item>
+          <ion-label position="floating" color="medium">Barrio</ion-label>
+          <ion-input type="text" formControlName="neighborhood"></ion-input>
+        </ion-item>
+        <app-error-message [field]="registerForm.getForm().get('address').get('neighborhood')" error="required" message="Debe ingresar un barrio"></app-error-message>
+      </ion-card-content>
+    </ion-card>
+    <ion-button (click)="register()" color="light" size="full">Enviar</ion-button>  
+  </form>
+</ion-content>
